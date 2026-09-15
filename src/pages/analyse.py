@@ -92,7 +92,13 @@ def display_analysis_page(df):
     if x_variable == y_variable:
         st.warning("Veuillez sélectionner deux variables différentes.")
     else:
-        display_relationship(df_filtered, x_variable, y_variable)
+        col1, col2 = st.columns(2)
+
+        with col1:
+            display_relationship(df_filtered, x_variable, y_variable)
+
+        with col2:
+            display_correlation_heatmap(df_filtered)
 
     """ display_relationship(
         df_filtered,
@@ -100,6 +106,6 @@ def display_analysis_page(df):
         y_variable
     ) """
 
-    st.divider()
+    """ st.divider()
 
-    display_correlation_heatmap(df_filtered)
+    display_correlation_heatmap(df_filtered) """
