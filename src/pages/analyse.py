@@ -108,4 +108,4 @@ def display_analysis_page(df):
 
     """ st.divider()
 
-    display_correlation_heatmap(df_filtered) """
+    display_correlation_heatmap(df_filtered)"""
