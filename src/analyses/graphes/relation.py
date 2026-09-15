@@ -12,14 +12,25 @@ def display_pas_dri_relationship(df):
 
     fig, ax = plt.subplots(figsize=(10, 5))
 
-    sns.scatterplot(
-        data=df,
-        x="PAS",
-        y="DRI",
-        ax=ax
-    )
+    sns.scatterplot(data=df, x="PAS", y="DRI", ax=ax)
 
     ax.set_xlabel("PAS")
     ax.set_ylabel("DRI")
+
+    st.pyplot(fig)
+
+
+def display_age_ovr_relationship(df):
+    st.subheader("Âge et performance")
+    st.caption("Relation entre l'âge des joueurs et leur note globale (OVR).")
+
+    fig, ax = plt.subplots(figsize=(6, 3))
+
+    sns.scatterplot(data=df, x="Age", y="OVR", ax=ax)
+
+    sns.regplot(data=df, x="Age", y="OVR", scatter=False, ax=ax)
+
+    ax.set_xlabel("Âge")
+    ax.set_ylabel("OVR")
 
     st.pyplot(fig)

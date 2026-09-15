@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-def display_ovr_distribution(df):
+""" def display_ovr_distribution(df):
     st.subheader("Distribution des OVR")
 
     st.caption(
@@ -20,6 +20,24 @@ def display_ovr_distribution(df):
     )
 
     ax.set_xlabel("OVR")
+    ax.set_ylabel("Nombre de joueurs")
+
+    st.pyplot(fig) """
+
+
+def display_distribution(df, measure):
+    st.subheader(f"Distribution des {measure}")
+
+    st.caption(
+        f"Cet histogramme permet d'observer la répartition des {measure} "
+        "des joueurs sélectionnés."
+    )
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    sns.histplot(data=df, x=measure, bins=15, ax=ax)
+
+    ax.set_xlabel(measure)
     ax.set_ylabel("Nombre de joueurs")
 
     st.pyplot(fig)

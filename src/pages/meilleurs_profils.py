@@ -1,9 +1,6 @@
 import streamlit as st
 
-from src.analyses.joueurs import (
-    display_best_players,
-    display_top_players_by_stat
-)
+from src.analyses.joueurs import display_best_players, display_top_players_by_stat
 
 from src.analyses.graphes.radar import display_player_radar
 
@@ -13,7 +10,7 @@ from src.features.filtres import get_gender_filter, apply_gender_filter
 def display_best_profiles(df):
 
     st.title("Analyse des joueurs FIFA - Meilleurs profils")
-    
+
     st.write(
         "Identifiez les meilleurs joueurs selon leur note globale "
         "ou selon une qualité spécifique."

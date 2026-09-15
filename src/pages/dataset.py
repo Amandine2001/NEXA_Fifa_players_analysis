@@ -4,7 +4,9 @@ import streamlit as st
 def display_dataset(df):
     st.title("Analyse des joueurs FIFA - Le dataset")
 
-    st.write("Explorez les caractéristiques de joueurs de football afin de comparer leurs performances et d'identifier les meilleurs profils.")
+    st.write(
+        "Explorez les caractéristiques de joueurs de football afin de comparer leurs performances et d'identifier les meilleurs profils."
+    )
 
     st.write(
         "Le dataset contient des informations sur les joueurs, "
@@ -16,19 +18,14 @@ def display_dataset(df):
 
     col1, col2, col3, col4 = st.columns(4)
 
-    col1.metric("Joueurs", len(df))
-    col2.metric("Championnats", df["League"].nunique())
-    col3.metric("Nations", df["Nation"].nunique())
-    col4.metric("Postes", df["Position"].nunique())
-
+    col1.metric("Joueurs", len(df), border=True)
+    col2.metric("Championnats", df["League"].nunique(), border=True)
+    col3.metric("Nations", df["Nation"].nunique(), border=True)
+    col4.metric("Postes", df["Position"].nunique(), border=True)
 
     st.subheader("Aperçu des données")
-    
-    st.dataframe(
-        df,
-        use_container_width=True,
-        hide_index=True
-    )
+
+    st.dataframe(df, use_container_width=True, hide_index=True)
 
     st.divider()
     col1, col2 = st.columns(2)
@@ -48,7 +45,6 @@ def display_dataset(df):
 
         for variable, description in stats.items():
             st.write(f"**{variable}** — {description}")
-
 
     with col2:
         st.subheader("Postes")
@@ -73,5 +69,3 @@ def display_dataset(df):
 
         for position, description in positions.items():
             st.write(f"**{position}** — {description}")
-
-    

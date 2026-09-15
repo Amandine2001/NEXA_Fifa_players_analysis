@@ -3,9 +3,12 @@ import streamlit as st
 from src.features.filtres import get_filters, apply_filters
 from src.features.kpis import display_kpis
 
-from src.analyses.graphes.distribution import display_ovr_distribution
-from src.analyses.graphes.comparaison import display_ovr_by_position
-from src.analyses.graphes.relation import display_pas_dri_relationship
+from src.analyses.graphes.distribution import display_distribution
+from src.analyses.graphes.comparaison import display_measure_by_position
+from src.analyses.graphes.relation import (
+    display_age_ovr_relationship,
+    display_pas_dri_relationship,
+)
 from src.analyses.graphes.heatmap import display_correlation_heatmap
 
 
@@ -19,22 +22,12 @@ def display_analysis_page(df):
 
     gender, league, position, nation, ovr_min, pac_min = get_filters(df)
 
-    df_filtered = apply_filters(
-        df,
-        gender,
-        league,
-        position,
-        nation,
-        ovr_min,
-        pac_min
-    )
+    df_filtered = apply_filters(df, gender, league, position, nation, ovr_min, pac_min)
 
     if df_filtered.empty:
-        st.warning(
-            "Aucun joueur ne correspond aux filtres sélectionnés."
-        )
+        st.warning("Aucun joueur ne correspond aux filtres sélectionnés.")
         return
-    
+
     st.divider()
 
     # KPIs
@@ -56,29 +49,46 @@ def display_analysis_page(df):
         "PAS",
         "DRI",
         "DEF",
-        "PHY"
+        "PHY",
     ]
 
-    top_players = (
-        df_filtered[columns]
-        .sort_values("OVR", ascending=False)
-        .head(10)
-    )
+    top_players = df_filtered[columns].sort_values("OVR", ascending=False).head(10)
 
-    st.dataframe(
-        top_players,
-        use_container_width=True,
-        hide_index=True
-    )
+    st.dataframe(top_players, use_container_width=True, hide_index=True)
 
     st.divider()
 
     # Graphiques
-    display_ovr_distribution(df_filtered)
+    """ col1, col2 = st.columns(2)
 
-    display_ovr_by_position(df_filtered)
+    with col1:
+        display_ovr_distribution(df_filtered)
 
-    display_pas_dri_relationship(df_filtered)
+    with col2:
+        display_ovr_by_position(df_filtered) """
+
+    measure = st.selectbox(
+        "Mesure à analyser", ["OVR", "PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        display_distribution(df_filtered, measure)
+
+    with col2:
+        display_measure_by_position(df_filtered, measure)
+
+    st.divider()
+    st.subheader("Relations entre les caractéristiques")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        display_pas_dri_relationship(df_filtered)
+
+    with col2:
+        display_age_ovr_relationship(df_filtered)
 
     st.divider()
 
