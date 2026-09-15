@@ -1,0 +1,8 @@
+config.properties
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.docx
+*.ipynb
