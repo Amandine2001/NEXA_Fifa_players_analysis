@@ -5,10 +5,7 @@ from src.features.kpis import display_kpis
 
 from src.analyses.graphes.distribution import display_distribution
 from src.analyses.graphes.comparaison import display_measure_by_position
-from src.analyses.graphes.relation import (
-    display_age_ovr_relationship,
-    display_pas_dri_relationship,
-)
+from src.analyses.graphes.relation import display_relationship
 from src.analyses.graphes.heatmap import display_correlation_heatmap
 
 
@@ -82,13 +79,26 @@ def display_analysis_page(df):
     st.divider()
     st.subheader("Relations entre les caractéristiques")
 
+    variables = ["Age", "PAC", "SHO", "PAS", "DRI", "DEF", "PHY", "OVR"]
+
     col1, col2 = st.columns(2)
 
     with col1:
-        display_pas_dri_relationship(df_filtered)
+        x_variable = st.selectbox("Variable X", variables, index=0)
 
     with col2:
-        display_age_ovr_relationship(df_filtered)
+        y_variable = st.selectbox("Variable Y", variables, index=7)
+
+    if x_variable == y_variable:
+        st.warning("Veuillez sélectionner deux variables différentes.")
+    else:
+        display_relationship(df_filtered, x_variable, y_variable)
+
+    """ display_relationship(
+        df_filtered,
+        x_variable,
+        y_variable
+    ) """
 
     st.divider()
 
